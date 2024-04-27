@@ -1,3 +1,8 @@
+<?php
+    require_once "connect.php";
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +21,7 @@
 <body>
     <div class="d-flex flex-column justify-content-center container w-50">
         <h1 class="mt-5 text-center mb-3">Change Password</h1>
-        <form action="#" method="post" class="form d-flex flex-column justify-content-center">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" class="form d-flex flex-column justify-content-center">
 
             <div class="mt-3">
                 <label for="password" class="form-label">New Password: </label>
@@ -26,9 +31,26 @@
             <div class="mt-3">
                 <label for="confirm_password" class="form-label">Confirm Password: </label>
                 <input type="password" class="form-control" placeholder="********" id="confirm_password" name="confirm_password" required>
+
+                <?php
+                    if (isset($_POST['submit'])){
+                        if(trim($_POST['confirm_password']) !== trim($_POST['password'])){
+                            echo "<span class='text-danger'>Password Confirmation doesn't match</span>";
+                        } else {
+                            $password_change = $_SESSION['password'];
+                            $password = hash('SHA256', $_POST['password']);
+
+                            $sql_password_change = "UPDATE users SET password = '$password' WHERE password = '$password_change';";
+                            mysqli_query($connect, $sql_password_change);
+
+                            Header("Location: login.php?Password_Change");
+ 
+                        }
+                    }
+                ?>
             </div>
 
-            <button class="btn btn-primary mt-3 justify-self-center" type="submit">Save Changes</button>
+            <button class="btn btn-primary mt-3 justify-self-center" type="submit" name="submit">Save Changes</button>
 
         </form>
     </div>

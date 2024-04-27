@@ -50,6 +50,8 @@
                         Header("Location: welcome.php");
                         $_SESSION['isLoggedin'] = true;
                         $_SESSION['username'] = $data['username'];
+                        $_SESSION['password'] = $data['password'];
+
                     } else {
                         echo "<script>alert('Account Not Found')</script>";
                     }

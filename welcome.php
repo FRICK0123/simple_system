@@ -26,7 +26,7 @@ if (isset($_SESSION['isLoggedin']) !== true) {
     <div class="container text-center mt-5">
         <?php echo "<h1>Welcome " . $_SESSION['username'] . ", Have a Good Day</h1>"; ?>
         <div class="container d-flex justify-content-center mt-3">
-            <form action="#" method="POST" class="me-5">
+            <form action="change_pass.php" method="POST" class="me-5">
                 <button class="btn btn-primary" type="submit">Change Password</button>
             </form>
 
